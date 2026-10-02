@@ -9,5 +9,6 @@ fi
 
 rm -rf -- "$PLUGIN_DIR"
 pkexec rm -f -- /usr/local/bin/omarchy-cpu-mode
+pkexec rm -f -- /etc/polkit-1/rules.d/49-omarchy-cpu-mode.rules
 
 echo "CPU Mode removed. The currently selected CPU policy was left unchanged."

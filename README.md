@@ -29,7 +29,9 @@ cd ~/Work/omarchy-cpu-mode
 ```
 
 Click **Q** or **F** in the right side of the bar. Switching modes may display
-a graphical authentication prompt.
+one authentication prompt during installation. Subsequent switches do not
+prompt because the installer adds a narrowly scoped polkit rule for the
+installing user and the root-owned CPU mode helper.
 
 ## Command line
 
@@ -60,6 +62,10 @@ Full mode before uninstalling if you want normal CPU performance restored.
 
 The plugin reduces heat by limiting CPU performance. It does not weaken the
 system fan curve or prevent the fans from responding to high temperatures.
+
+Passwordless switching is limited to the active local user who installed the
+plugin and only authorizes `/usr/local/bin/omarchy-cpu-mode`. The helper is
+owned by root and accepts only `status`, `quiet`, `full`, and `toggle`.
 
 ## License
 
