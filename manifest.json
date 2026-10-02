@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "local.cpu-mode",
+  "name": "CPU Mode",
+  "version": "1.0.0",
+  "author": "Alex",
+  "license": "MIT",
+  "description": "Toggle between quiet and full CPU performance",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "CPU Mode",
+    "description": "Toggle quiet or full CPU performance",
+    "category": "System",
+    "allowMultiple": false,
+    "defaultSection": "right"
+  }
+}

@@ -1,0 +1,85 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+readonly POLICY_FILE="/etc/tmpfiles.d/intel-pstate-cool.conf"
+readonly PSTATE_DIR="/sys/devices/system/cpu/intel_pstate"
+
+current_mode() {
+  local no_turbo max_perf
+  no_turbo="$(<"$PSTATE_DIR/no_turbo")"
+  max_perf="$(<"$PSTATE_DIR/max_perf_pct")"
+
+  if [[ "$no_turbo" == "1" && "$max_perf" -le 60 ]]; then
+    printf 'quiet\n'
+  else
+    printf 'full\n'
+  fi
+}
+
+write_policy() {
+  local no_turbo="$1"
+  local max_perf="$2"
+  local temp_file
+
+  temp_file="$(mktemp "${POLICY_FILE}.XXXXXX")"
+  trap 'rm -f "$temp_file"' EXIT
+
+  cat >"$temp_file" <<EOF
+# Managed by omarchy-cpu-mode.
+w $PSTATE_DIR/no_turbo - - - - $no_turbo
+w $PSTATE_DIR/max_perf_pct - - - - $max_perf
+EOF
+
+  chmod 0644 "$temp_file"
+  mv "$temp_file" "$POLICY_FILE"
+  trap - EXIT
+}
+
+set_quiet() {
+  powerprofilesctl set power-saver
+  write_policy 1 60
+  printf '60\n' >"$PSTATE_DIR/max_perf_pct"
+  printf '1\n' >"$PSTATE_DIR/no_turbo"
+}
+
+set_full() {
+  write_policy 0 100
+  printf '0\n' >"$PSTATE_DIR/no_turbo"
+  printf '100\n' >"$PSTATE_DIR/max_perf_pct"
+  powerprofilesctl set balanced
+}
+
+case "${1:-status}" in
+  status)
+    current_mode
+    ;;
+  quiet)
+    [[ "$EUID" -eq 0 ]] || {
+      echo "quiet mode requires root privileges" >&2
+      exit 1
+    }
+    set_quiet
+    ;;
+  full)
+    [[ "$EUID" -eq 0 ]] || {
+      echo "full mode requires root privileges" >&2
+      exit 1
+    }
+    set_full
+    ;;
+  toggle)
+    [[ "$EUID" -eq 0 ]] || {
+      echo "toggling CPU mode requires root privileges" >&2
+      exit 1
+    }
+    if [[ "$(current_mode)" == "quiet" ]]; then
+      set_full
+    else
+      set_quiet
+    fi
+    ;;
+  *)
+    echo "Usage: omarchy-cpu-mode [status|quiet|full|toggle]" >&2
+    exit 2
+    ;;
+esac
