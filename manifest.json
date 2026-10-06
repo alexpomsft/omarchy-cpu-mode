@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "id": "local.cpu-mode",
   "name": "CPU Mode",
-  "version": "1.0.0",
+  "version": "1.1.2",
   "author": "Alex",
   "license": "MIT",
-  "description": "Toggle between quiet and full CPU performance",
+  "description": "Toggle CPU performance and inspect live CPU metrics",
   "kinds": [
     "bar-widget"
   ],
@@ -14,7 +14,7 @@
   },
   "barWidget": {
     "displayName": "CPU Mode",
-    "description": "Toggle quiet or full CPU performance",
+    "description": "Toggle CPU performance; hover for temperature, fan speed and usage",
     "category": "System",
     "allowMultiple": false,
     "defaultSection": "right"

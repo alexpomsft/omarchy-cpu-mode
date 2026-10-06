@@ -15,9 +15,17 @@ command -v pkexec >/dev/null || {
   exit 1
 }
 
+command -v python3 >/dev/null || {
+  echo "Python 3 is required to read CPU metrics." >&2
+  exit 1
+}
+
 mkdir -p "$PLUGIN_DIR"
-install -m 0644 "$ROOT_DIR/manifest.json" "$PLUGIN_DIR/manifest.json"
-install -m 0644 "$ROOT_DIR/BarWidget.qml" "$PLUGIN_DIR/BarWidget.qml"
+if [[ ! "$ROOT_DIR" -ef "$PLUGIN_DIR" ]]; then
+  install -m 0644 "$ROOT_DIR/manifest.json" "$PLUGIN_DIR/manifest.json"
+  install -m 0644 "$ROOT_DIR/cpu-metrics.py" "$PLUGIN_DIR/cpu-metrics.py"
+  install -m 0644 "$ROOT_DIR/BarWidget.qml" "$PLUGIN_DIR/BarWidget.qml"
+fi
 pkexec install -o root -g root -m 0755 \
   "$ROOT_DIR/bin/omarchy-cpu-mode" \
   /usr/local/bin/omarchy-cpu-mode
@@ -28,4 +36,4 @@ pkexec chmod 0644 "$POLKIT_RULE"
 omarchy plugin validate "$PLUGIN_DIR"
 omarchy plugin enable local.cpu-mode --section right
 
-echo "CPU Mode installed. Click Q/F in the Omarchy bar to toggle without a password."
+echo "CPU Mode installed. Left-click Q/F to toggle; hover for metrics or right-click to pin them."
