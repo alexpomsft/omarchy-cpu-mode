@@ -10,6 +10,22 @@ A small Omarchy Shell bar widget that switches an Intel CPU between **Quiet**
 and **Full** modes. The bar stays uncluttered: a single **Q** or **F**, with a
 compact live metrics popup when you want more detail.
 
+## Why this exists
+
+Built primarily for **Intel MacBooks with a Touch Bar/T2 chip running
+Omarchy/Linux**, especially machines whose fans get loud under CPU load.
+Quiet mode trades peak CPU performance for less heat and can help keep fan
+noise down during everyday work. Switch back to Full when you need more
+headroom for builds or other CPU-heavy tasks.
+
+It can also be useful on other compatible Intel laptops. It does not
+directly slow the fans or bypass the machine's thermal protections.
+
+![CPU Mode in Quiet mode, showing live CPU temperature, usage, clock speed, both Apple SMC fan speeds, Turbo Boost state, and performance cap](preview.png)
+
+*The real widget and popup with live Intel CPU and Apple SMC readings.
+Values vary with workload and hardware.*
+
 ## At a glance
 
 | Interaction | What happens |
@@ -22,20 +38,6 @@ compact live metrics popup when you want more detail.
 Move the pointer into a hover popup to keep it open. Metrics refresh every
 two seconds while the popup is open; there is no background metrics polling
 when it is closed.
-
-Illustrative popup; readings and sensor labels depend on your hardware:
-
-```text
-CPU / Quiet
-
-CPU temperature          49.0 C
-CPU usage                 12.4%
-CPU clock (average)     1.20 GHz
-applesmc: fan1         2,170 RPM
-applesmc: fan2         2,000 RPM
-Turbo Boost            Disabled
-Performance cap             60%
-```
 
 ## Two simple modes
 
