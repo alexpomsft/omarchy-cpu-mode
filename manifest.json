@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "id": "local.cpu-mode",
   "name": "CPU Mode",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "author": "Alex",
   "license": "MIT",
-  "description": "Toggle CPU performance and inspect live CPU metrics",
+  "description": "Keep an Intel MacBook (T2/Touch Bar) quiet under Omarchy: one click switches between Quiet and Full CPU modes, and a hover popup shows live CPU temperature, usage, clock, fan RPM and Turbo state. Not a fan controller; Intel intel_pstate only.",
   "kinds": [
     "bar-widget"
   ],
