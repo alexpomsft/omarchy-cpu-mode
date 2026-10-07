@@ -4,6 +4,7 @@
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Omarchy Shell](https://img.shields.io/badge/Omarchy-Shell-black.svg)](https://omarchy.org/)
+[![Omarchy Plugin Page](https://img.shields.io/badge/Omarchy-Plugin%20Page-black.svg)](https://plugins.omarchy.org/plugin.html?id=local.cpu-mode)
 [![GitHub](https://img.shields.io/badge/GitHub-alexpomsft%2Fomarchy--cpu--mode-181717.svg)](https://github.com/alexpomsft/omarchy-cpu-mode)
 
 A small Omarchy Shell bar widget that switches an Intel CPU between **Quiet**
